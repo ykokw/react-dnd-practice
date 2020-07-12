@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Card from "./Card";
 
 function App() {
+  const items = [...Array(30).keys()].map((i) => `item${i}`);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="app">
+      <div
+        className="wrapper"
+        style={{
+          width: "300px",
+          height: "600px",
+          overflowY: "scroll",
+          margin: "64px",
+        }}
+      >
+        <ul
+          className="card-list"
+          style={{
+            padding: "0",
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          {items.map((item) => (
+            <Card key={item} label={item} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
