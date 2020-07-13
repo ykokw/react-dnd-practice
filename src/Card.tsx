@@ -30,10 +30,7 @@ const Card: React.FC<{
       // https://developer.mozilla.org/ja/docs/Web/API/Element/getBoundingClientRect
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
 
-      // hoverしたアイテムのheight / 2
-      // TODO: rect.heightでもいける。。。？
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = hoverBoundingRect.height / 2;
 
       // ドラッグ中のポインタ座標
       const clientOffset = monitor.getClientOffset();
