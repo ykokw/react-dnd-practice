@@ -29,6 +29,7 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="app">
+        <div>react-dnd + react-dnd-scrolling利用</div>
         <ScrollComponent
           className="wrapper"
           style={{
