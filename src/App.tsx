@@ -1,9 +1,14 @@
 import React, { useState, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+// extern.d.ts追加したけどうまくいかない。。。
+// @ts-ignore
+import withScrolling from "react-dnd-scrolling";
 
 import "./App.css";
 import Card from "./Card";
+
+const ScrollComponent = withScrolling('div');
 
 function App() {
   const [items, setItems] = useState(
@@ -24,7 +29,7 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="app">
-        <div
+        <ScrollComponent
           className="wrapper"
           style={{
             width: "300px",
@@ -49,7 +54,7 @@ function App() {
               />
             ))}
           </ul>
-        </div>
+        </ScrollComponent>
       </div>
     </DndProvider>
   );
