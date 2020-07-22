@@ -5,22 +5,17 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import "./App.css";
 import Card from "./Card";
 
-type DraggingHandler = (params: {
-  isDragging: boolean;
-  clientOffset: XYCoord | null;
-  sourceClientOffset: XYCoord | null;
-}) => void;
+type DraggingHandler = (params: { clientOffset: XYCoord | null }) => void;
 
 let intervalId: number = 0;
 const DragLayerComponent: React.FC<{ onDragging: DraggingHandler }> = ({
   children,
   onDragging,
 }) => {
-  const { isDragging, clientOffset, sourceClientOffset } = useDragLayer(
+  const { isDragging, clientOffset } = useDragLayer(
     (monitor) => ({
       isDragging: monitor.isDragging(),
       clientOffset: monitor.getClientOffset(),
-      sourceClientOffset: monitor.getSourceClientOffset(),
     })
   );
   if (!isDragging) {
@@ -32,9 +27,7 @@ const DragLayerComponent: React.FC<{ onDragging: DraggingHandler }> = ({
     intervalId = window.setInterval(
       () =>
         onDragging({
-          isDragging,
           clientOffset,
-          sourceClientOffset,
         }),
       10
     );
@@ -70,19 +63,10 @@ function App() {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const onDragging: DraggingHandler = ({
-    isDragging,
-    clientOffset,
-    sourceClientOffset,
-  }) => {
+  const onDragging: DraggingHandler = ({ clientOffset }) => {
     const rect = wrapperRef.current?.getBoundingClientRect();
     if (!rect) return;
     const { top, bottom } = rect;
-    console.log(`isDragging: ${isDragging}`);
-    console.log(`clientOffset: ${JSON.stringify(clientOffset)}`);
-    console.log(`sourceOffset: ${JSON.stringify(sourceClientOffset)}`);
-    console.log(`top: ${top}`);
-    console.log(`bottom: ${bottom}`);
     if (
       clientOffset &&
       clientOffset.y > top &&
@@ -94,7 +78,6 @@ function App() {
           top: wrapperRef.current.scrollTop - 3,
         });
       }
-      console.log("near to the top");
     }
     if (
       clientOffset &&
@@ -107,7 +90,6 @@ function App() {
           top: wrapperRef.current.scrollTop + 3,
         });
       }
-      console.log("near to the bottom");
     }
   };
 
